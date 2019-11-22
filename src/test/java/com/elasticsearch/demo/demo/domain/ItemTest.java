@@ -43,7 +43,6 @@ public class ItemTest {
         }
     }
 
-   // @Test
     public void testSearch(String searchContent) {
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.query(QueryBuilders.queryStringQuery(searchContent));
@@ -67,7 +66,7 @@ public class ItemTest {
 
     @Test
     public void exeSearch(){
-        String search = "了";
+        String search = "手机";
         testSearch(search);
     }
 }
