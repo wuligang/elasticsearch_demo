@@ -99,6 +99,10 @@ public class EsTest {
         JSONArray retJsonArray = new JSONArray();
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
         searchSourceBuilder.sort("publishDate", SortOrder.ASC); //根据发版日期排序
+        //搜索关键词
+        searchSourceBuilder.query(QueryBuilders.queryStringQuery("优惠"));
+        //查看前两条
+        searchSourceBuilder.from(0).size(2);
         SearchResult result;
         try {
             result = esClient.searchWithQuery(searchSourceBuilder.toString());
