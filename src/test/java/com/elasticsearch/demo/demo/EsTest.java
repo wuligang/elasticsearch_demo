@@ -2,6 +2,7 @@ package com.elasticsearch.demo.demo;
 
 import com.alibaba.fastjson.JSON;
 import com.elasticsearch.demo.demo.domain.User;
+import com.elasticsearch.demo.demo.service.ContentService;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexRequest;
 import org.elasticsearch.action.bulk.BulkRequest;
@@ -31,6 +32,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author wlg
@@ -46,6 +49,8 @@ public class EsTest {
 
     @Autowired
     private RestHighLevelClient restHighLevelClient;
+    @Autowired
+    private ContentService contentService;
 
     //创建索引
     @Test
@@ -159,7 +164,19 @@ public class EsTest {
         }
         BulkResponse bulk = restHighLevelClient.bulk(bulkRequest, RequestOptions.DEFAULT);
         System.out.println(bulk);
+    }
 
+    //抓取京东商品列表到es
+    @Test
+    public void testParseJdContent() throws IOException {
+        contentService.parseContent("elasticsearch");
+    }
+
+    //关键词搜索,分页，高亮
+    @Test
+    public void testSearchWithKeyAndPage() throws IOException {
+        List<Map<String, Object>> list = contentService.searchPage("java", 1, 5);
+        list.forEach(System.out::println);
     }
 
 }
